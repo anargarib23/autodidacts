@@ -28,7 +28,7 @@ HEADERS = {'User-Agent' : USER_AGENT}
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Parsing algorithm for 'BBC Azerbaijan' news
+# 1. Parsing algorithm for 'BBC Azerbaijan' news
 def parseBBCAz(query):
     query = querize(query)
 
@@ -57,7 +57,7 @@ def parseBBCAz(query):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      
-# Parsing algorithm for 'Azadliq Radiosu' news
+# 2. Parsing algorithm for 'Azadliq Radiosu' news
 # TODO: edit date format
 def parseAzadliq(query):
     query = querize(query)
@@ -85,7 +85,7 @@ def parseAzadliq(query):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
-# Parsing algorithm for 'Meydan TV' news
+# 3. Parsing algorithm for 'Meydan TV' news
 # INCOMPLETE: Wrong HTML file is retrieved while searching
 def parseMeydanTV(query):
     query = querize(query)
@@ -107,7 +107,7 @@ def parseMeydanTV(query):
         
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Parsing algorithm for 'Report Az' news
+# 4. Parsing algorithm for 'Report Az' news
 def parseReportAz(query):
     query = querize(query)
 
@@ -133,7 +133,7 @@ def parseReportAz(query):
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Parsing algorithm for 'QafqazInfo' news
+# 5. Parsing algorithm for 'QafqazInfo' news
 def parseQafqazInfo(query):
     query = querize(query)
 
@@ -156,7 +156,7 @@ def parseQafqazInfo(query):
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Parsing Algorithm for Lent.az
+# 6. Parsing Algorithm for Lent.az
 def parseLentAz(query):
     query = querize(query)
 
@@ -185,7 +185,7 @@ def parseLentAz(query):
     return site
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Parsing Algorithm for Real TV
+# 7. Parsing Algorithm for Real TV
 def parseRealTV(query):
     query = querize(query)
     
@@ -212,7 +212,7 @@ def parseRealTV(query):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Parsing Algorithm for Eastnews.org
+# 8. Parsing Algorithm for Eastnews.org
 def parseEastNews(query):
     query = querize(query)
     
@@ -236,7 +236,7 @@ def parseEastNews(query):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Parsing Algorithm for Apa.az
+# 9. Parsing Algorithm for Apa.az
 def parseApaAz(query):
     query = querize(query)
 
@@ -265,7 +265,7 @@ def parseApaAz(query):
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Parsing Algorithm for Musavat.az
+# 10. Parsing Algorithm for Musavat.az
 def parseMusavatAz(query):
     query = querize(query)
     
@@ -294,7 +294,7 @@ def parseMusavatAz(query):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Parsing Algorithm for 'Metbuat.az'
+# 11. Parsing Algorithm for 'Metbuat.az'
 def parseMetbuatAz(query):
     query = querize(query)
 
@@ -323,3 +323,321 @@ def parseMetbuatAz(query):
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+# 12. Parsing Algorithm for 'Axar.az'
+def parseAxarAz(query):
+    query = querize(query)
+
+    request = Request('https://axar.az/search.php?query=' + query, None, HEADERS)
+    source = urlopen(request)
+    file = bs.BeautifulSoup(source, 'lxml')
+
+    parent = file.find('div', class_='newsPlace')
+
+    news_tags = parent.find_all('a', href=True)
+    date_tags = file.find_all('div', {'id' : 'cat_news_info'})
+   
+    length = len(news_tags)
+    del news_tags[length - 1]
+    del news_tags[length - 2]
+
+    i = 1
+
+    while (i < len(date_tags)):
+        date_tags[i] = 'x'
+        i = i + 2
+
+    while 'x' in date_tags:
+        date_tags.remove('x')
+    
+    site = Site('Axar.az')
+    
+    for i in range(len(news_tags)): 
+        tag = news_tags[i]
+        date = date_tags[i]
+        site.results.append(News(tag['href'], tag.get_text(), date.get_text(), '00:00'))
+
+    for r in site.results:
+        print(r.source + '|' + r.headline + '|' + r.date)
+
+    return site
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# 13. Parsing Algorithm for 'Milli.az'
+def parseMilliAz(query):
+    query = querize(query)
+
+    request = Request('https://www.milli.az/search.php?query=' + query, None, HEADERS)
+    source = urlopen(request)
+    file = bs.BeautifulSoup(source, 'lxml')
+
+    parent = file.find('ul', class_='post-list2')
+
+    news_tags = parent.find_all('a', href=True)
+    date_tags = parent.find_all('span', class_='time')
+
+    i = 0
+    
+    while (i < len(news_tags)):
+        news_tags[i] = date_tags[0]
+        i = i + 2
+
+    while date_tags[0] in news_tags:
+        news_tags.remove(date_tags[0])
+
+    site = Site('Milli.az')
+
+    for i in range(len(news_tags)): 
+        tag = news_tags[i]
+        date = date_tags[i]
+        site.results.append(News(tag['href'], tag.get_text(), date.get_text(), '00:00'))
+
+    for r in site.results:
+        print(r.source + '|' + r.headline + '|' + r.date)
+
+    return site
+    
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# 14. Parsing Algorithm for 'QaynarInfo.az'
+def parseQaynarInfo(query):
+    query = querize(query)
+
+    request = Request('https://qaynarinfo.az/az/search/?query=' + query, None, HEADERS)
+    source = urlopen(request)
+    file = bs.BeautifulSoup(source, 'lxml')
+
+    parent = file.find('div', class_='posts-wrap')
+    
+    source_tags = parent.find_all('a', href=True)
+    headline_tags = parent.find_all('h2', 'post-title')
+    date_tags = parent.find_all('div', class_='post-date')
+
+    site = Site('Qaynarinfo.az')
+
+    for i in range(len(source_tags)): 
+        source = source_tags[i]
+        headline = headline_tags[i]
+        date = date_tags[i]
+        site.results.append(News(source['href'], headline.get_text().strip(), date.get_text().strip(), '00:00'))
+
+    for r in site.results:
+        print(r.source + '|' + r.headline + '|' + r.date)
+
+    return site
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# 15. Parsing Algorithm for 'Publika.az'
+def parsePublikaAz(query):
+    query = querize(query)
+
+    request = Request('https://publika.az/search.php?query=' + query, None, HEADERS)
+    source = urlopen(request)
+    file = bs.BeautifulSoup(source, 'lxml')
+
+    parent = file.find('div', class_='page_layout clearfix')
+
+    news_tags = parent.find_all('a', href=True)
+    date_tags = parent.find_all('li', class_='date')
+
+    print(len(news_tags))
+    print(len(date_tags))
+
+    length = len(news_tags)
+
+    del news_tags[length - 1]
+    del news_tags[length - 2]
+
+    i = 0
+    
+    while (i < len(news_tags)):
+        news_tags[i] = date_tags[0]
+        i = i + 2
+
+    while date_tags[0] in news_tags:
+        news_tags.remove(date_tags[0])
+
+    site = Site('Publika.az')
+
+    for i in range(len(news_tags)): 
+        tag = news_tags[i]
+        date = date_tags[i]
+        site.results.append(News(tag['href'], tag.get_text().strip(), date.get_text().strip(), '00:00'))
+
+    for r in site.results:
+        print(r.source + '|' + r.headline + '|' + r.date)
+
+    return site
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# 16. Parsing Algorithm for 'AzVision.az'
+def parseAzVision(query):
+    query = querize(query)
+
+    request = Request('https://azvision.az/search.php?search=' + query, None, HEADERS)
+    source = urlopen(request)
+    file = bs.BeautifulSoup(source, 'lxml')
+
+    parent = file.find('ul', 'contents')
+
+    news_tags = file.find_all('a', {'itemprop' : 'name'})
+
+    site = Site('AzVision.az')
+
+    for i in range(len(news_tags)): 
+        tag = news_tags[i]
+        site.results.append(News('https://azvision.az' + tag['href'], tag.get_text().strip(), '00.00.0000', '00:00'))
+
+    for r in site.results:
+        print(r.source + '|' + r.headline + '|' + r.date)
+
+    return site
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# 17. Parsing Algorithm for 'Demokrat.az'
+def parseDemokratAz(query):
+    query = querize(query)
+
+    request = Request('https://demokrat.az/search?q=' + query, None, HEADERS)
+    source = urlopen(request)
+    file = bs.BeautifulSoup(source, 'lxml')
+
+    parent = file.find('div', {'id' : 'wrapper'})
+
+    news_tags = parent.find_all('a', href=True)
+
+    site = Site('Demokrat.az')
+
+    for i in range(len(news_tags)): 
+        tag = news_tags[i]
+        site.results.append(News('https://demokrat.az/' + tag['href'], tag.get_text().strip(), '00.00.0000', '00:00'))
+
+    for r in site.results:
+        print(r.source + '|' + r.headline + '|' + r.date)
+
+    return site
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# 18. Parsing Algorithm for 'Femida.az'
+def parseFemidaAz(query):
+    query = querize(query)
+
+    request = Request('http://femida.az/?search=' + query, None, HEADERS)
+    source = urlopen(request)
+    file = bs.BeautifulSoup(source, 'lxml')
+
+    parent = file.find('ul', class_='list')
+
+    news_tags = parent.find_all('a', href=True)
+
+    site = Site('Femida.az')
+
+    for i in range(len(news_tags)): 
+        tag = news_tags[i]
+        site.results.append(News(tag['href'], tag.get_text().strip(), '00.00.0000', '00:00'))
+
+    for r in site.results:
+        print(r.source + '|' + r.headline + '|' + r.date)
+
+    return site
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# 19. Parsing Algorithm for 'Aztoday.az'
+def parseAzToday(query):
+    query = querize(query)
+
+    request = Request('https://www.aztoday.az/?s=' + query, None, HEADERS)
+    source = urlopen(request)
+    file = bs.BeautifulSoup(source, 'lxml')
+
+    parent = file.find('ul', class_='penci-wrapper-data penci-grid')
+    
+    news_tags = parent.find_all('a', class_='penci-image-holder penci-lazy', href=True)
+    date_tags = parent.find_all('time', class_='entry-date published')
+
+    site = Site('Aztoday.az')
+
+    for i in range(len(news_tags)): 
+        tag = news_tags[i]
+        date = date_tags[i]
+        site.results.append(News(tag['href'], tag['title'], date.get_text().strip(), '00:00'))
+
+    for r in site.results:
+        print(r.source + '|' + r.headline + '|' + r.date)
+
+    return site
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# 20. Parsing Algorithm for 'Ordu.az'
+def parseOrduAz(query):
+    query = querize(query)
+
+    request = Request('https://ordu.az/index.php?search=' + query, None, HEADERS)
+    source = urlopen(request)
+    file = bs.BeautifulSoup(source, 'lxml')
+
+    super_parent = file.find('div', class_='col-md-9 col-sm-12')
+    parent = super_parent.find('div', class_='row')
+
+    source_tags = parent.find_all('a', href=True)
+    headline_tags = parent.find_all('div', class_='news-title')
+    
+    site = Site('Ordu.az')
+
+    for i in range(len(source_tags)): 
+        source = source_tags[i]
+        headline = headline_tags[i]
+        site.results.append(News(source['href'], headline.get_text().strip(), '00.00.0000', '00:00'))
+
+    for r in site.results:
+        print(r.source + '|' + r.headline + '|' + r.date)
+
+    return site
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# 21. Parsing Algorithm for 'Teleqraf.com'
+
+def parseTeleqraf(query):
+    query = querize(query)
+
+    request = Request('https://teleqraf.com/search.php?query=' + query, None, HEADERS)
+    source = urlopen(request)
+    file = bs.BeautifulSoup(source, 'lxml')
+
+    parent = file.find('div', 'col-md-11 col-sm-11')
+
+    source_tags = parent.find_all('a', href=True)
+    headline_tags = parent.find_all('h3')
+    date_tags = parent.find_all('div', class_='time')
+
+    print(len(source_tags))
+    print(len(headline_tags))
+    print(len(date_tags))
+
+    print(source_tags)
+
+    length = len(source_tags)
+
+    del source_tags[length - 1]
+    del source_tags[length - 2]
+    
+    site = Site('Teleqraf.com')
+
+    for i in range(len(source_tags)):
+        source = source_tags[i]
+        headline = headline_tags[i]
+        date = date_tags[i]
+        site.results.append(News(source['href'], headline.get_text(), date.get_text(), '00:00'))
+
+    for r in site.results:
+       print(r.source + '|' + r.headline + '|' + r.date)
+
+    return site
+    
