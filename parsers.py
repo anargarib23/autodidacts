@@ -160,7 +160,7 @@ def parseQafqazInfo(query):
 def parseLentAz(query):
     query = querize(query)
 
-    request = Request('https://www.lent.az/axtar?q=' + query, None, HEADERS)
+    request = Request('https://www.lent.az/axtaris-neticesi?search=' + query, None, HEADERS)
     source = urlopen(request)
     file = bs.BeautifulSoup(source, 'lxml')
 
@@ -285,7 +285,7 @@ def parseMusavatAz(query):
         source = source_tags[i]
         headline = headline_tags[i]
         date = date_tags[i]
-        site.results.append(News('https://www.musavat.az' + source['href'], headline.get_text(), date.get_text(), '00:00'))
+        site.results.append(News('https://www.musavat.com' + source['href'], headline.get_text(), date.get_text(), '00:00'))
 
     for r in site.results:
        print(r.source + '|' + r.headline + '|' + r.date)
