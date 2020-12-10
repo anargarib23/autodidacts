@@ -1,0 +1,28 @@
+Tested on Desktop:
+
+1. BBC Az -ERROR. 404 error. Search page has been removed.
+2. Azadliq - OK. Searches the 1st page.
+3. Meydan TV - ERROR. Parsing unsuccessful.
+4. Report.az - OK. Searches the 1st page.
+5. QafqazInfo - OK. Searches the 1st page.
+6. Lent.az - ERROR. Parsing unsuccessful. Needs update.
+7. RealTV - OK. Searches the 1st page.
+8. EastNews - OK. Searches the 1st page.
+9. ApaAz - OK. Searches the 1st page.
+10. Musavat - OK. Searches the 1st page.
+11. Metbuat - OK. Searches the 1st page.
+12. AxarAz - OK. Searches the 1st page.
+13. MilliAz - OK. Searches the 1st page.
+14. QaynarInfo - OK. Searches the 1st page.
+15. PublikaAz - OK. Searches the 1st page.
+16. AzVision - OK. Searches the 1st page.
+17. DemokratAz - ERROR. Parsing unsuccessful. Needs update.
+18. FemidaAz - OK. Searches the 1st page.
+19. AzToday - OK. Searches the 1st page.
+20. OrduAz - OK. Searches the 1st page.
+21. Teleqraf - OK. Searches the 1st page.
+
+Dysfunctional parsers: 4 (#1, #3, #6, #17)
+Functional parsers: 17
+Total: 21
+Last Update : 10.12.2020 11:59 AM
