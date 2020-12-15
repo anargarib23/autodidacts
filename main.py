@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from flask_mongoalchemy import MongoAlchemy
 
 import os
@@ -10,13 +10,18 @@ from parsers import *
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return '1'
+    return render_template('index.html')
+
+@app.route('/intermediate', methods=['GET', 'POST'])
+def intermediate():
+    query = request.form['keyword']
+    return redirect('/search?query=' + query)
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    query = request.args['search']
+    query = request.args['query']
     sites = loadSites(query)
 
     return render_template('search.html', sites=sites)
