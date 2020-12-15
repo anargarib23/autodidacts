@@ -40,11 +40,17 @@
         }
 
         function modifyCards() {
-            // event.srcElement.innerText
             newsCards = document.getElementsByClassName('news-header')
-            
-            for(i = 0; i < newsCards.length; i++) {
-                newsCards[i].innerText = event.srcElement.innerText
+
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                for(i = 0; i < newsCards.length; i++) {
+                    newsCards[i].innerText = event.srcElement.innerText
+                }
+                toggleSidebar()
+            } else {
+                for(i = 0; i < newsCards.length; i++) {
+                    newsCards[i].innerText = event.srcElement.innerText
+                }
             }
         }
     </script>
