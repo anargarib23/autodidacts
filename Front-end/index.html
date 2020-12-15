@@ -40,16 +40,19 @@
         }
 
         function modifyCards() {
-            newsCards = document.getElementsByClassName('news-header')
+            newsCards = document.getElementsByClassName('news-title')
+            newsCardsDates = document.getElementsByClassName('news-date')
 
             if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 for(i = 0; i < newsCards.length; i++) {
                     newsCards[i].innerText = event.srcElement.innerText
+                    newsCardsDates[i].innerText = '12.12.2020'
                 }
                 toggleSidebar()
             } else {
                 for(i = 0; i < newsCards.length; i++) {
                     newsCards[i].innerText = event.srcElement.innerText
+                    newsCardsDates[i].innerText = '12.12.2020'
                 }
             }
         }
@@ -84,32 +87,32 @@
         <div class="news-cards">
             <article class="card">
                 <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
-                    Иранская головоломка - головная боль нового президента США<br>
-                    <span class="news-date">15:38</span>
+                    <span class="news-title">Иранская головоломка - головная боль нового президента США</span><br>
+                    <span class="news-date">12.12.2020</span>
                 </a>
             </article>
             <article class="card">
                 <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
-                    Иранская головоломка - головная боль нового президента США<br>
-                    <span class="news-date">15:38</span>
+                    <span class="news-title">Иранская головоломка - головная боль нового президента США</span><br>
+                    <span class="news-date">12.12.2020</span>
                 </a>
             </article>
             <article class="card">
                 <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
-                    Иранская головоломка - головная боль нового президента США<br>
-                    <span class="news-date">15:38</span>
+                    <span class="news-title">Иранская головоломка - головная боль нового президента США</span><br>
+                    <span class="news-date">12.12.2020</span>
                 </a>
             </article>
             <article class="card">
                 <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
-                    Иранская головоломка - головная боль нового президента США<br>
-                    <span class="news-date">15:38</span>
+                    <span class="news-title">Иранская головоломка - головная боль нового президента США</span><br>
+                    <span class="news-date">12.12.2020</span>
                 </a>
             </article>
             <article class="card">
                 <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
-                    Иранская головоломка - головная боль нового президента США<br>
-                    <span class="news-date">15:38</span>
+                    <span class="news-title">Иранская головоломка - головная боль нового президента США</span><br>
+                    <span class="news-date">12.12.2020</span>
                 </a>
             </article>
         </div>
