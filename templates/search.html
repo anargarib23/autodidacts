@@ -71,19 +71,32 @@
         }
 
         function modifyCards() {
-            newsCards = document.getElementsByClassName('news-title')
-            newsCardsDates = document.getElementsByClassName('news-date')
-
+            newsCards = document.getElementsByClassName('news-cards');
+			newsHeader = document.getElementsByClassName('news-cards-header');
+			defaultResult = false;
+			
+			for(i = 0; i < newsCards.length; i++) {
+				newsCards[i].style.display = "none";
+			}
+			
+			srcId = event.srcElement.id;	
+			
             if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 for(i = 0; i < newsCards.length; i++) {
-                    newsCards[i].innerText = event.srcElement.innerText
-                    newsCardsDates[i].innerText = '12.12.2020'
+					if(newsCards[i].id == srcId){
+						newsCards[i].style.display = "block";
+						newsHeader[0].innerText = 'Axtarış Nəticələri: ' + newsCards[i].id;
+						break;
+					}
                 }
-                toggleSidebar()
+                toggleSidebar();
             } else {
                 for(i = 0; i < newsCards.length; i++) {
-                    newsCards[i].innerText = event.srcElement.innerText
-                    newsCardsDates[i].innerText = '12.12.2020'
+                    if(newsCards[i].id == srcId){
+						newsCards[i].style.display = "block";
+						newsHeader[0].innerText = 'Axtarış Nəticələri: ' + newsCards[i].id;
+						break;
+					}
                 }
             }
         }
@@ -95,8 +108,10 @@
         <a href="index.html"><img src="static/images/XeberTapIcon.png" alt="XeberTap Icon"
                 class="noselect xebertap-icon"></img></a>
         <div class="input-group mb-3">
-            <input type="text" placeholder="Xəbər axtar">
-            <a href="/search.html" class="seatch-btn btn btn-outline-secondary">Axtar</a>
+            <form action='/intermediate' method="post">
+				<input type="text" name="keyword" placeholder="Xəbər axtar">
+				<input type="submit" class="seatch-btn btn btn-outline-secondary" value="Axtar">
+			</form>
         </div>
     </div>
     <nav id="sidebar-navigation">
@@ -108,46 +123,28 @@
         <span class="navbar-header">Vebsaytlar</span>
 		{% for site in sites %}
 		
-        <a href="#" onclick="modifyCards();" class="navigation-item">{{site.getName()}}</a>
+        <a href="#" onclick="modifyCards();" class="navigation-item" id="{{site.getName()}}">{{site.getName()}}</a>
         
 		{% endfor %}
     </nav>
     <section class="news">
         <header>
-            <h4 class="news-cards-header">Axtarış nəticələri</h4>
+            <h4 class="news-cards-header">Axtarış nəticələri: {{sites[0].getName()}}</h4>
         </header>
-        <div class="news-cards">
-            <article class="card">
-                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
-                    <span class="news-title">Иранская головоломка - головная боль нового президента США</span><br>
-                    <span class="news-date">12.12.2020</span>
-                </a>
-            </article>
-            <article class="card">
-                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
-                    <span class="news-title">Иранская головоломка - головная боль нового президента США</span><br>
-                    <span class="news-date">12.12.2020</span>
-                </a>
-            </article>
-            <article class="card">
-                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
-                    <span class="news-title">Иранская головоломка - головная боль нового президента США</span><br>
-                    <span class="news-date">12.12.2020</span>
-                </a>
-            </article>
-            <article class="card">
-                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
-                    <span class="news-title">Иранская головоломка - головная боль нового президента США</span><br>
-                    <span class="news-date">12.12.2020</span>
-                </a>
-            </article>
-            <article class="card">
-                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
-                    <span class="news-title">Иранская головоломка - головная боль нового президента США</span><br>
-                    <span class="news-date">12.12.2020</span>
-                </a>
-            </article>
-        </div>
+		
+		{% for i in range(sites |length) %}
+			<div class="news-cards" id="{{sites[i].getName()}}" style="display:{% if i == 0 %}block{% else %}none {% endif %}">
+				
+				{% for news in sites[i].getResults() %}
+					<article class="card">
+						<a href="{{news.getSource()}}" class="news-header" rel="noopener noreferrer" target="_blank">
+							<span class="news-title">{{news.getHeadline()}}</span><br>
+							<span class="news-date">{{news.getDate()}}</span>
+						</a>
+					</article>
+				{% endfor %}
+			</div>
+		{% endfor %}
     </section>
 </body>
 

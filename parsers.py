@@ -55,8 +55,8 @@ def parseBBCAz(query):
         site.results.append(News(tag['href'], tag.string, date.string, '00:00'))
 
     # to print for debugging
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
+    #for r in site.results:
+    #    print(r.source + '|' + r.headline + '|' + r.date)
 
     return site
 
@@ -82,9 +82,6 @@ def parseAzadliq(query):
         headline = source['title']
         date = date_tags[i]
         site.results.append(News('https://www.azadliq.org' + source['href'], headline, date.string, '00:00'))
-
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
 
     return site
 
@@ -175,10 +172,6 @@ def parseLentAz(query):
         tag = news_tags[i]
         date = date_tags[i]
         site.results.append(News('https://www.lent.az' + tag['href'], tag.get_text().strip(), date.get_text().strip(), '00:00'))
-        
-    # to print for debugging
-    for r in site.results:
-       print(r.source + '|' + r.headline + '|' + r.date)
 
     return site
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -203,9 +196,6 @@ def parseRealTV(query):
         tag = news_tags[i]
         site.results.append(News('https://www.lent.az' + tag['href'], tag.get_text().strip(), ' ', '00:00'))
 
-    for r in site.results:
-       print(r.source + '|' + r.headline + '|' + r.date)
-
     return site
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -226,9 +216,6 @@ def parseEastNews(query):
     for i in range(len(news_tags)): 
         tag = news_tags[i]
         site.results.append(News(tag['href'], tag.get_text().strip(), ' ', '00:00'))
-
-    for r in site.results:
-       print(r.source + '|' + r.headline + '|' + r.date)
 
     return site
 
@@ -256,9 +243,6 @@ def parseApaAz(query):
         date = date_tags[i]
         site.results.append(News('https://www.apa.az' + source['href'], headline.get_text(), date.get_text(), '00:00'))
 
-    for r in site.results:
-       print(r.source + '|' + r.headline + '|' + r.date)
-
     return site
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -285,9 +269,6 @@ def parseMusavatAz(query):
         date = date_tags[i]
         site.results.append(News('https://www.musavat.com' + source['href'], headline.get_text(), date.get_text(), '00:00'))
 
-    for r in site.results:
-       print(r.source + '|' + r.headline + '|' + r.date)
-
     return site
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -313,9 +294,6 @@ def parseMetbuatAz(query):
         headline = headline_tags[i]
         date = date_tags[i]
         site.results.append(News('https://metbuat.az' + source['href'], headline.get_text(), date.get_text(), '00:00'))
-
-    for r in site.results:
-       print(r.source + '|' + r.headline + '|' + r.date)
 
     return site
     
@@ -354,9 +332,6 @@ def parseAxarAz(query):
         date = date_tags[i]
         site.results.append(News(tag['href'], tag.get_text(), date.get_text(), '00:00'))
 
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
-
     return site
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -390,9 +365,6 @@ def parseMilliAz(query):
         date = date_tags[i]
         site.results.append(News(tag['href'], tag.get_text(), date.get_text(), '00:00'))
 
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
-
     return site
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -418,9 +390,6 @@ def parseQaynarInfo(query):
         headline = headline_tags[i]
         date = date_tags[i]
         site.results.append(News(source['href'], headline.get_text().strip(), date.get_text().strip(), '00:00'))
-
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
 
     return site
 
@@ -463,9 +432,6 @@ def parsePublikaAz(query):
         date = date_tags[i]
         site.results.append(News(tag['href'], tag.get_text().strip(), date.get_text().strip(), '00:00'))
 
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
-
     return site
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -488,9 +454,6 @@ def parseAzVision(query):
         tag = news_tags[i]
         site.results.append(News('https://azvision.az' + tag['href'], tag.get_text().strip(), '00.00.0000', '00:00'))
 
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
-
     return site
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -512,9 +475,6 @@ def parseDemokratAz(query):
     for i in range(len(news_tags)): 
         tag = news_tags[i]
         site.results.append(News('https://demokrat.az/' + tag['href'], tag.get_text().strip(), '00.00.0000', '00:00'))
-
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
 
     return site
 
@@ -562,9 +522,6 @@ def parseAzToday(query):
         date = date_tags[i]
         site.results.append(News(tag['href'], tag['title'], date.get_text().strip(), '00:00'))
 
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
-
     return site
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -589,9 +546,6 @@ def parseOrduAz(query):
         source = source_tags[i]
         headline = headline_tags[i]
         site.results.append(News(source['href'], headline.get_text().strip(), '00.00.0000', '00:00'))
-
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
 
     return site
 
@@ -630,9 +584,6 @@ def parseTeleqraf(query):
         headline = headline_tags[i]
         date = date_tags[i]
         site.results.append(News(source['href'], headline.get_text(), date.get_text(), '00:00'))
-
-    for r in site.results:
-       print(r.source + '|' + r.headline + '|' + r.date)
 
     return site
     
