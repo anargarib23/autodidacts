@@ -32,8 +32,13 @@ HEADERS = {'User-Agent' : USER_AGENT}
 def parseBBCAz(query):
     query = querize(query)
 
-    request = Request('https://www.bbc.com/azeri/search?q=' + query, None, HEADERS)
-    source = urlopen(request)
+    try:
+        request = Request('https://www.bbc.com/azeri/search?q=' + query, None, HEADERS)
+        source = urlopen(request)
+    except:
+        print("Request failed.")
+        return None
+    
     file = bs.BeautifulSoup(source, 'lxml')
 
     # in search results BBC Azerbaijani uses <a class="hard-news-unit__headline-link"> tag for headline and links
@@ -125,10 +130,6 @@ def parseReportAz(query):
         date = date_tags[i]
         site.results.append(News("https://report.az/" + tag['href'], tag.get_text().strip(), date.get_text().strip(), '00:00'))
 
-    # to print for debugging
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
-
     return site
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -148,9 +149,6 @@ def parseQafqazInfo(query):
     for i in range(len(news_tags)): 
         tag = news_tags[i]
         site.results.append(News(tag['href'], tag.get_text().strip(), '00.00.0000', '00:00'))
-
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
 
     return site
     
@@ -539,9 +537,6 @@ def parseFemidaAz(query):
     for i in range(len(news_tags)): 
         tag = news_tags[i]
         site.results.append(News(tag['href'], tag.get_text().strip(), '00.00.0000', '00:00'))
-
-    for r in site.results:
-        print(r.source + '|' + r.headline + '|' + r.date)
 
     return site
 

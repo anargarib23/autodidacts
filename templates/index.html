@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+    <link rel="icon" type="image/png" href="static/images/favicon.ico"/>
+    <title>XeberTap</title>
+
+    <script>
+        function openCloseSidebarNavigation() {
+            width = document.getElementById("sidebar-navigation").offsetWidth;
+
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                if (width == 50) {
+                    document.getElementById("sidebar-navigation").style.width = '100%';
+                    document.getElementById("sidebar-navigation").style.background = 'rgb(245, 245, 245)'
+                    document.getElementById("sidebar-navigation").style.overflowY = 'scroll';
+                    document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+                } else {
+                    document.getElementById("sidebar-navigation").style.width = "0";
+                    document.getElementById("sidebar-navigation").style.background = 'none'
+                    document.getElementById("sidebar-navigation").style.overflowY = 'hidden';
+                    document.getElementsByTagName('body')[0].style.overflow = 'scroll'
+                }
+            } else {
+                if (width == 50) {
+                    document.getElementById("sidebar-navigation").style.width = '19.5%';
+                    document.getElementById("sidebar-navigation").style.overflowY = 'scroll';
+                } else {
+                    document.getElementById("sidebar-navigation").style.width = "0";
+                    document.getElementById("sidebar-navigation").style.overflowY = 'hidden';
+                    
+                }
+            }
+            
+        }
+    </script>
+</head>
+
+<body class=".container">
+    <div class="wrapper">
+        <a href="index.html"><img src="static/images/XeberTapIcon.png" alt="XeberTap Icon"
+                class="noselect xebertap-icon"></img></a>
+        <div class="input-group mb-3">
+			<form action='/intermediate' method="post">
+				<input type="text" name="keyword" placeholder="Xəbər axtar">
+				<input type="submit" class="seatch-btn btn btn-outline-secondary" value="Axtar">
+			</form>
+        </div>
+    </div>
+    <nav id="sidebar-navigation">
+        <label class="hamburger-icon" onclick="openCloseSidebarNavigation();">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <span class="navbar-header">Vebsaytlar</span>
+        <a href="" class="navigation-item">BBC Azeri</a>
+        <a href="" class="navigation-item">Qafqazinfo</a>
+        <a href="" class="navigation-item">Caucausus Center</a>
+        <a href="" class="navigation-item">APA</a>
+        <span class="navbar-header">Kateqoriyalar</span>
+        <a href="" class="navigation-item">Siyasət</a>
+        <a href="" class="navigation-item">İqdisadiyyat</a>
+        <a href="" class="navigation-item">Dünya</a>
+        <a href="" class="navigation-item">Texnologiya</a>
+        <a href="" class="navigation-item">Siyasət</a>
+        <a href="" class="navigation-item">İqdisadiyyat</a>
+        <a href="" class="navigation-item">Dünya</a>
+        <a href="" class="navigation-item">Texnologiya</a>
+        <a href="" class="navigation-item">Siyasət</a>
+        <a href="" class="navigation-item">İqdisadiyyat</a>
+        <a href="" class="navigation-item">Dünya</a>
+        <a href="" class="navigation-item">Texnologiya</a>
+    </nav>
+    <section class="news">
+        <header>
+            <h4 class="news-cards-header">Xəbər başlıqları</h4>
+        </header>
+        <div class="news-cards">
+            <article class="card">
+                <a href="https://haqqin.az/democracy/195894" class="news-header" rel="noopener noreferrer"
+                    target="_blank">
+                    Турция готовится к атаке Байдена
+                </a>
+            </article>
+            <article class="card">
+                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
+                    Иранская головоломка - головная боль нового президента США
+                </a>
+            </article>
+            <article class="card">
+                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
+                    Иранская головоломка - головная боль нового президента США
+                </a>
+            </article>
+            <article class="card">
+                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
+                    Иранская головоломка - головная боль нового президента США
+                </a>
+            </article>
+            <article class="card">
+                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
+                    Иранская головоломка - головная боль нового президента США
+                </a>
+            </article>
+            <article class="card">
+                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
+                    Иранская головоломка - головная боль нового президента США
+                </a>
+            </article>
+            <article class="card">
+                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
+                    Иранская головоломка - головная боль нового президента США
+                </a>
+            </article>
+            <article class="card">
+                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
+                    Иранская головоломка - головная боль нового президента США
+                </a>
+            </article>
+            <article class="card">
+                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
+                    Иранская головоломка - головная боль нового президента США
+                </a>
+            </article>
+            <article class="card">
+                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
+                    Иранская головоломка - головная боль нового президента США
+                </a>
+            </article>
+            <article class="card">
+                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
+                    Иранская головоломка - головная боль нового президента США
+                </a>
+            </article>
+            <article class="card">
+                <a href="https://haqqin.az/news/195952" class="news-header" rel="noopener noreferrer" target="_blank">
+                    Иранская головоломка - головная боль нового президента США
+                </a>
+            </article>
+        </div>
+    </section>
+</body>
+
+</html>
